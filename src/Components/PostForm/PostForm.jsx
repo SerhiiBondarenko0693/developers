@@ -24,7 +24,7 @@ const PostForm = () => {
     const {shuldRefresh, setShouldRefresh} = useContext(RefreshCard)
 
 
-    const apiServerRegistration = async (values) => {
+    const apiServerRegistration = async (values,resetForm) => {
         const candidate = {
             email: values.email,
             name: values.name,
@@ -37,6 +37,8 @@ const PostForm = () => {
 
         if(response.status === 201){
             setShouldRefresh(true)
+            resetForm()
+            setImages([])
         }
         if(response.response.status === 409){
             alert("The user is already registered")
@@ -67,8 +69,8 @@ const PostForm = () => {
                         option: "Frontend developer",
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={(values) => {
-                        apiServerRegistration(values);
+                    onSubmit={async (values, { resetForm }) => {
+                        await apiServerRegistration(values,resetForm);
 
                     }}
                 >
