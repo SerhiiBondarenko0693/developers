@@ -1,0 +1,12 @@
+:root {
+    --container: 1170px;
+    --font-family: "Nunito", sans-serif;
+    --btn-color: #F4E041;
+    --bgd-color:#F8F8F8;
+    --btn-disable-color:#B4B4B4;
+    --gray-text-secondary:#7E7E7E;
+    --red-text:red;
+    --input-placeholder-color:#7E7E7E
+
+}
+

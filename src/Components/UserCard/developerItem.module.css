@@ -1,0 +1,54 @@
+.cardWrapper{
+    width: 30%;
+    min-width: 200px;
+    min-height: 214px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #FFFFFF;
+}
+
+.cardPhoto img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.developerName{
+    font-family: "Nunito", sans-serif;
+    line-height: 26px;
+    max-width: 300px;
+    margin: 10px 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.developerInfo{
+    max-width: 300px;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Nunito", sans-serif;
+    color: #000000;
+    line-height: 26px;
+
+}
+
+@media screen and (max-width: 768px) {
+    .cardWrapper{
+        width: 48%;
+    }
+    
+}
+@media screen and (max-width: 524px) {
+    .cardWrapper{
+        width: 90%;
+
+    }
+
+}
