@@ -24,8 +24,6 @@ const Developers = () => {
         }
     }, [shouldRefresh]);
 
-    console.log(list, "list");
-
     const hesNextPage = (totalPages) => {
         const nextPageExists = page.page < totalPages;
         setHasNextPage(nextPageExists);

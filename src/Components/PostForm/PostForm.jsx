@@ -20,8 +20,8 @@ const validationSchema = Yup.object().shape({
 const PostForm = () => {
 
     const [images, setImages] = useState([]);
-
-    const {shuldRefresh, setShouldRefresh} = useContext(RefreshCard)
+    const {shuldRefresh, setShouldRefresh} = useContext(RefreshCard);
+    const [isImg, setIsImg] = useState(false)
 
 
     const apiServerRegistration = async (values,resetForm) => {
@@ -52,8 +52,17 @@ const PostForm = () => {
 
     const onChange = (imageList) => {
         setImages(imageList);
+        setIsImg(false)
 
     };
+
+    const checkImg =()=>{
+        if(images.length){
+            setIsImg(false)
+        }else {
+            setIsImg(true)
+        }
+    }
 
 
 
@@ -69,12 +78,22 @@ const PostForm = () => {
                         option: "Frontend developer",
                     }}
                     validationSchema={validationSchema}
+                    validateOnChange={true}
+                    validateOnBlur={true}
+                    validateOnMount={true}
+
                     onSubmit={async (values, { resetForm }) => {
                         await apiServerRegistration(values,resetForm);
 
                     }}
                 >
-                    {({ errors, touched,isValid, dirty }) => (
+                    {({ errors,
+                          touched
+                          ,isValid,
+                          dirty,
+                          handleChange
+
+                      }) => (
                         <Form>
                             <Input
                                 name="name"
@@ -82,13 +101,15 @@ const PostForm = () => {
                                 isError={errors.name && touched.name}
                                 errorText={errors.name}
                                 type={"text"}
+                                onChange={handleChange}
                             />
                             <Input
                                 name="email"
                                 placeholder="Email"
-                                isError={errors.email && touched.email}
+                                isError={errors.email && touched.email }
                                 errorText={errors.email}
                                 type={"email"}
+                                onChange={handleChange}
                             />
                             <Input
                                 name="phone"
@@ -96,6 +117,7 @@ const PostForm = () => {
                                 isError={errors.phone && touched.phone}
                                 errorText={errors.phone}
                                 type={"phone"}
+                                onChange={handleChange}
                             />
                             <p className={styles.numberMask}>+38 (XXX) XXX - XX - XX</p>
                             <div className={styles.radioBtnSection}>
@@ -144,18 +166,20 @@ const PostForm = () => {
                                             onChange={onChange}
                                             maxFileSize={500000}
                                             acceptType={["jpg"]}
-                                            // maxNumber={100}
                                             dataURLKey="data_url"
                                         >
                                             {({
-
                                                   onImageUpload,
                                                   errors,
+
                                               }) => (
 
                                                 <div className={styles.files} onClick={onImageUpload}>
-
+                                                    {isImg &&
+                                                        <span className={styles.filesBlockErr}>Your selected file </span>}
                                                     {errors && <div>
+                                                    {errors.maxNumber &&
+                                                            <span className={styles.filesBlockErr}>Your selected file type is not JPG</span>}
                                                         {errors.acceptType &&
                                                             <span className={styles.filesBlockErr}>Your selected file type is not JPG</span>}
                                                         {errors.maxFileSize &&
@@ -179,12 +203,23 @@ const PostForm = () => {
 
                             </div>
 
-                            <Button
-                                text={"Sign up"}
-                                type={"submit"}
-                                className={styles.postBtn}
-                                disabled={!isValid || !dirty || !images}
-                            />
+                            {!isValid || !dirty || !images.length?
+                                <Button
+                                    text={"Sign up"}
+                                    type={"submit"}
+                                    className={styles.postBtnDisable}
+                                    onClick={checkImg}
+
+                                />
+                                    :
+                                <Button
+                                    text={"Sign up"}
+                                    type={"submit"}
+                                    className={styles.postBtn}
+                                    onClick={checkImg}
+
+                                />
+                            }
 
                         </Form>
                     )}

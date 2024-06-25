@@ -7,9 +7,9 @@ import style from "./InputFormik.module.css";
 const Input = ({name="",
                    placeholder="",
                    isError=false,
+                   onBlur,
                    errorText="",
                    type="submit",
-
                    errorMessageOther="",
                    isErrorMessageServer=""}) => {
 
@@ -20,6 +20,10 @@ const Input = ({name="",
                 className={style.input}
                 name={name}
                 placeholder={placeholder}
+                autoComplete={name}
+
+
+
             />
             {isError ? (<p className={style.errorText}>{`*${errorText}`}</p>) : null}
             {isErrorMessageServer ? (<p className={style.errorText}>{`*${errorMessageOther}`}</p>) : null}
